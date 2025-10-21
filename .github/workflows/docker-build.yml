@@ -1,0 +1,30 @@
+name: Docker Build Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+      
+    - name: Build Frontend
+      run: |
+        docker build -t deepseek-ocr-frontend:test ./frontend
+        
+    - name: Build Backend
+      run: |
+        docker build -t deepseek-ocr-backend:test ./backend
+        
+    - name: Test Docker Compose
+      run: |
+        docker-compose config

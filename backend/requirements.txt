@@ -1,0 +1,35 @@
+# FastAPI and server
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+
+# ML/AI dependencies (DeepSeek-OCR official requirements)
+transformers==4.46.3
+tokenizers==0.20.3
+huggingface-hub>=0.30.0
+accelerate>=0.25.0
+torch>=2.0.0
+torchvision>=0.15.0
+sentencepiece==0.1.99
+protobuf>=3.20.0
+
+# Image processing (DeepSeek-OCR requirements)
+Pillow>=10.0.0
+opencv-python>=4.8.0
+matplotlib>=3.7.0
+PyMuPDF>=1.23.0
+img2pdf>=0.4.0
+
+# Data handling (DeepSeek-OCR requirements)
+addict>=2.4.0
+numpy>=1.24.0
+einops>=0.6.0
+easydict>=1.10
+
+# Data validation
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# Utilities
+aiofiles==23.2.1
+python-dotenv==1.0.0

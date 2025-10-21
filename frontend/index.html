@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepSeek OCR - Reconocimiento de Texto IA</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 DeepSeek OCR</h1>
+            <p class="subtitle">Reconocimiento de texto avanzado con IA open source</p>
+            <div id="status-indicator" class="status-indicator">
+                <span class="dot"></span>
+                <span id="status-text">Verificando...</span>
+            </div>
+            
+            <!-- Model Download Section -->
+            <div id="modelDownloadSection" class="model-download-section hidden">
+                <p class="download-prompt">⚠️ El modelo no está descargado. Haz clic para descargarlo (puede tardar varios minutos)</p>
+                <button id="downloadModelBtn" class="btn btn-download">📥 Descargar Modelo</button>
+                
+                <!-- Progress Bar -->
+                <div id="downloadProgressContainer" class="progress-container hidden">
+                    <div class="progress-bar-wrapper">
+                        <div id="downloadProgressBar" class="progress-bar" style="width: 0%"></div>
+                    </div>
+                    <p id="downloadProgressText" class="progress-text">0% - Iniciando...</p>
+                </div>
+            </div>
+            
+            <!-- Demo Mode Button -->
+            <div id="demoModeSection" class="demo-mode-section hidden">
+                <button id="demoModeBtn" class="btn btn-demo">🎮 Modo Demo (Probar Interfaz)</button>
+            </div>
+        </header>
+
+        <main>
+            <!-- Upload Section -->
+            <section class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <input type="file" id="fileInput" accept="image/*,.pdf" hidden>
+                    <div class="upload-content">
+                        <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                        </svg>
+                        <p class="upload-text">Arrastra una imagen aquí o haz clic para seleccionar</p>
+                        <p class="upload-hint">Soporta: JPG, PNG, WEBP, PDF (Máx. 10MB)</p>
+                    </div>
+                </div>
+
+                <!-- Preview -->
+                <div id="previewSection" class="preview-section hidden">
+                    <img id="imagePreview" src="" alt="Preview">
+                    <button id="clearBtn" class="btn btn-secondary">✕ Limpiar</button>
+                </div>
+            </section>
+
+            <!-- Options Section -->
+            <section class="options-section">
+                <div class="option-group">
+                    <label for="modeSelect">Modo de OCR:</label>
+                    <select id="modeSelect" class="select">
+                        <option value="markdown">📝 Markdown - Documentos con formato</option>
+                        <option value="free_ocr">⚡ Free OCR - Texto rápido</option>
+                        <option value="grounding">🎯 Grounding - Con coordenadas</option>
+                        <option value="parse_figure">📊 Parse Figure - Figuras y gráficos</option>
+                        <option value="detailed">🔍 Detailed - Descripción detallada</option>
+                    </select>
+                </div>
+
+                <div class="option-group">
+                    <label for="customPrompt">Prompt personalizado (opcional):</label>
+                    <input type="text" id="customPrompt" class="input" placeholder="Ejemplo: <image>\nExtrae todos los números...">
+                </div>
+
+                <button id="processBtn" class="btn btn-primary" disabled>
+                    <span class="btn-text">Procesar OCR</span>
+                </button>
+            </section>
+
+            <!-- Loading -->
+            <div id="loadingSection" class="loading-section hidden">
+                <div class="spinner"></div>
+                <p>Procesando imagen con IA...</p>
+                <p class="loading-hint">Esto puede tomar 10-60 segundos dependiendo del modo</p>
+            </div>
+
+            <!-- Results Section -->
+            <section id="resultsSection" class="results-section hidden">
+                <h2>✅ Resultados</h2>
+                
+                <div class="result-stats">
+                    <div class="stat">
+                        <span class="stat-label">Tiempo:</span>
+                        <span id="processingTime" class="stat-value">-</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Modo:</span>
+                        <span id="usedMode" class="stat-value">-</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Tamaño:</span>
+                        <span id="imageSize" class="stat-value">-</span>
+                    </div>
+                </div>
+
+                <div class="result-content">
+                    <div class="result-header">
+                        <h3>Texto Extraído:</h3>
+                        <button id="copyBtn" class="btn btn-small">📋 Copiar</button>
+                    </div>
+                    <pre id="resultText" class="result-text"></pre>
+                </div>
+
+                <div class="result-actions">
+                    <button id="downloadBtn" class="btn btn-secondary">⬇️ Descargar TXT</button>
+                    <button id="newOcrBtn" class="btn btn-primary">🔄 Nuevo OCR</button>
+                </div>
+            </section>
+
+            <!-- Error Section -->
+            <div id="errorSection" class="error-section hidden">
+                <h3>❌ Error</h3>
+                <p id="errorMessage"></p>
+                <button id="retryBtn" class="btn btn-primary">🔄 Reintentar</button>
+            </div>
+        </main>
+
+        <footer>
+            <div class="info-cards">
+                <div class="info-card">
+                    <h4>⚡ Rápido</h4>
+                    <p>Procesamiento optimizado con GPU</p>
+                </div>
+                <div class="info-card">
+                    <h4>🔓 Open Source</h4>
+                    <p>Modelo DeepSeek-OCR bajo licencia MIT</p>
+                </div>
+                <div class="info-card">
+                    <h4>🎯 Preciso</h4>
+                    <p>IA entrenada específicamente para OCR</p>
+                </div>
+            </div>
+            <p class="footer-text">
+                Powered by <a href="https://github.com/deepseek-ai/DeepSeek-OCR" target="_blank">DeepSeek-OCR</a>
+            </p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

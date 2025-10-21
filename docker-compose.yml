@@ -1,0 +1,49 @@
+services:
+  deepseek-ocr-api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: deepseek-ocr-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - ./uploads:/app/uploads
+      - ./outputs:/app/outputs
+      - model_cache:/root/.cache/huggingface
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+      - HF_HOME=/root/.cache/huggingface
+      - MODEL_NAME=deepseek-ai/DeepSeek-OCR
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  deepseek-ocr-web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: deepseek-ocr-web
+    ports:
+      - "3000:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+    depends_on:
+      - deepseek-ocr-api
+    environment:
+      - API_URL=http://deepseek-ocr-api:8000
+    restart: unless-stopped
+
+volumes:
+  model_cache:
+    driver: local

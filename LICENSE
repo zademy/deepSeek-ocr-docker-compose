@@ -1,0 +1,63 @@
+MIT License - Development and Testing Only
+
+Copyright (c) 2025 DeepSeek OCR Project
+
+NOTICE: This software is provided for DEVELOPMENT and TESTING purposes ONLY.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction for DEVELOPMENT AND TESTING PURPOSES ONLY,
+including without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software for non-production
+environments, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+IMPORTANT DISCLAIMERS AND RESTRICTIONS:
+
+1. DEVELOPMENT AND TESTING USE ONLY
+   This software is explicitly designed and licensed for development, testing,
+   educational, and experimental purposes only. It is NOT intended for production
+   use or deployment in any business-critical, commercial, or production environment.
+
+2. PRODUCTION USE DISCLAIMER
+   Any use of this software in production environments is done ENTIRELY AT YOUR
+   OWN RISK and RESPONSIBILITY. The authors and copyright holders:
+   - Do NOT recommend using this software in production
+   - Provide NO guarantees of stability, security, or reliability for production use
+   - Accept NO liability for any damages, losses, or issues arising from production use
+   - Offer NO production support, maintenance, or service level agreements
+
+3. LIABILITY AND WARRANTY DISCLAIMER
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+   SOFTWARE.
+
+4. THIRD-PARTY COMPONENTS
+   This software uses the DeepSeek-OCR model and other third-party components
+   which are subject to their own licenses and terms of use. Users must comply
+   with all applicable third-party licenses.
+
+5. SECURITY AND DATA PRIVACY
+   Users are responsible for:
+   - Implementing appropriate security measures
+   - Protecting sensitive data and personal information
+   - Compliance with applicable data protection laws (GDPR, CCPA, etc.)
+   - Regular security audits and updates
+
+6. ACCEPTANCE OF TERMS
+   By using this software, you acknowledge and agree that:
+   - You have read and understood these terms and restrictions
+   - You accept full responsibility for any production use
+   - You will not hold the authors liable for any issues arising from your use
+   - You understand this is experimental software not ready for production
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+---
+
+For questions about licensing, please open an issue in the project repository.

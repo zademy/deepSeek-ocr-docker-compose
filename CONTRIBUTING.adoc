@@ -1,0 +1,286 @@
+= Contributing to DeepSeek OCR
+:toc:
+:toc-placement!:
+
+First off, thank you for considering contributing to DeepSeek OCR! It's people like you that make this project such a great tool.
+
+toc::[]
+
+== Code of Conduct
+
+By participating in this project, you are expected to uphold our link:CODE_OF_CONDUCT.md[Code of Conduct].
+
+== How Can I Contribute?
+
+=== Reporting Bugs
+
+Before creating bug reports, please check the existing issues to avoid duplicates. When you create a bug report, include as many details as possible:
+
+.Bug Report Template
+[source,markdown]
+----
+**Describe the bug**
+A clear and concise description of what the bug is.
+
+**To Reproduce**
+Steps to reproduce the behavior:
+1. Go to '...'
+2. Click on '....'
+3. See error
+
+**Expected behavior**
+What you expected to happen.
+
+**Screenshots**
+If applicable, add screenshots.
+
+**Environment:**
+ - OS: [e.g. Windows 11, Ubuntu 22.04]
+ - Docker version: [e.g. 24.0.6]
+ - GPU: [e.g. NVIDIA RTX 4090]
+ - CUDA version: [e.g. 11.8]
+
+**Additional context**
+Add any other context about the problem.
+----
+
+=== Suggesting Enhancements
+
+Enhancement suggestions are tracked as GitHub issues. When creating an enhancement suggestion:
+
+* *Use a clear and descriptive title*
+* *Provide a detailed description* of the suggested enhancement
+* *Explain why this enhancement would be useful*
+* *List some examples* of how it would be used
+
+=== Pull Requests
+
+1. *Fork the repository* and create your branch from `main`
+2. *Follow the coding standards* outlined below
+3. *Test your changes* thoroughly
+4. *Update documentation* if needed
+5. *Write clear commit messages*
+
+== Development Setup
+
+=== Prerequisites
+
+* Docker and Docker Compose
+* NVIDIA GPU with CUDA 11.8+ (for GPU testing)
+* Python 3.10+ (for local development)
+* Node.js (optional, for frontend development)
+
+=== Local Development
+
+[source,bash]
+----
+# Clone your fork
+git clone https://github.com/YOUR_USERNAME/deepseek-ocr.git
+cd deepseek-ocr
+
+# Create environment file
+cp .env.example .env
+
+# Build and start containers
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+----
+
+=== Running Tests
+
+[source,bash]
+----
+# Test the API
+python test_api.py
+
+# Manual testing
+curl -X POST "http://localhost:8000/api/ocr" \
+  -F "file=@test_image.jpg" \
+  -F "mode=markdown"
+----
+
+== Coding Standards
+
+=== Python (Backend)
+
+* Follow https://pep8.org/[PEP 8] style guide
+* Use type hints where applicable
+* Add docstrings to functions and classes
+* Keep functions focused and small
+* Write meaningful variable names
+
+.Example
+[source,python]
+----
+async def process_ocr(
+    file: UploadFile,
+    mode: Literal["free_ocr", "markdown"],
+    custom_prompt: Optional[str] = None
+) -> dict:
+    """
+    Process an image using OCR.
+    
+    Args:
+        file: Uploaded image file
+        mode: OCR processing mode
+        custom_prompt: Optional custom prompt
+        
+    Returns:
+        Dictionary containing OCR results
+    """
+    # Implementation
+    pass
+----
+
+=== JavaScript (Frontend)
+
+* Use modern ES6+ syntax
+* Add comments for complex logic
+* Keep functions pure when possible
+* Use meaningful variable names
+* Follow consistent formatting
+
+.Example
+[source,javascript]
+----
+/**
+ * Process OCR on the selected image
+ * @returns {Promise<Object>} OCR results
+ */
+async function processOCR() {
+    // Implementation
+}
+----
+
+=== Docker
+
+* Keep Dockerfiles clean and well-commented
+* Use multi-stage builds when appropriate
+* Minimize image size
+* Pin dependency versions
+
+== Git Workflow
+
+=== Branch Naming
+
+* `feature/` - New features (e.g., `feature/add-pdf-support`)
+* `fix/` - Bug fixes (e.g., `fix/memory-leak`)
+* `docs/` - Documentation updates (e.g., `docs/update-readme`)
+* `refactor/` - Code refactoring (e.g., `refactor/api-structure`)
+
+=== Commit Messages
+
+Follow the https://www.conventionalcommits.org/[Conventional Commits] specification:
+
+----
+<type>(<scope>): <subject>
+
+<body>
+
+<footer>
+----
+
+==== Types:
+
+* `feat`: New feature
+* `fix`: Bug fix
+* `docs`: Documentation changes
+* `style`: Code style changes (formatting, etc.)
+* `refactor`: Code refactoring
+* `test`: Adding or updating tests
+* `chore`: Maintenance tasks
+
+==== Examples:
+
+.Feature commit
+[source]
+----
+feat(api): add PDF processing support
+
+- Add PDF to image conversion
+- Update API documentation
+- Add tests for PDF handling
+
+Closes #123
+----
+
+.Bug fix commit
+[source]
+----
+fix(frontend): resolve progress bar animation issue
+
+The progress bar was not updating smoothly during model download.
+Fixed by adding CSS transitions and proper state updates.
+
+Fixes #456
+----
+
+== Documentation
+
+* Update README.md for user-facing changes
+* Update API documentation for endpoint changes
+* Add comments to complex code
+* Keep documentation concise and clear
+
+== Testing Guidelines
+
+=== Backend Testing
+
+* Test all API endpoints
+* Test error handling
+* Test edge cases
+* Verify GPU and CPU modes
+
+=== Frontend Testing
+
+* Test UI interactions
+* Test file upload
+* Test different browsers
+* Test responsive design
+
+== Deployment Considerations
+
+[IMPORTANT]
+====
+This project is for development and testing only. If you're adapting it for production:
+
+* Implement proper authentication and authorization
+* Add rate limiting
+* Set up monitoring and logging
+* Configure proper security headers
+* Use environment-specific configurations
+* Add comprehensive error handling
+* Implement data validation and sanitization
+====
+
+== Pull Request Checklist
+
+Before submitting your PR, ensure:
+
+* [ ] Code follows project coding standards
+* [ ] All tests pass
+* [ ] Documentation is updated
+* [ ] Commit messages are clear and follow conventions
+* [ ] No merge conflicts
+* [ ] PR description clearly describes the changes
+* [ ] Related issues are referenced
+
+== Questions?
+
+* Open an issue with the `question` label
+* Check existing documentation in `/docs`
+* Review closed issues and PRs
+
+== License
+
+By contributing, you agree that your contributions will be licensed under the same license as the project (MIT License - Development and Testing Only).
+
+== Recognition
+
+Contributors will be recognized in the project README and release notes.
+
+'''
+
+Thank you for contributing to DeepSeek OCR! 🎉
