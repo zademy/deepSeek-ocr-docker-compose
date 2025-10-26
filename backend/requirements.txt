@@ -1,35 +1,41 @@
+# ===================================================================
+# DeepSeek OCR - Backend Dependencies
+# ===================================================================
+# This file contains all Python dependencies required for the DeepSeek OCR backend.
+# For more information, visit: https://github.com/deepseek-ai/DeepSeek-OCR
+
 # FastAPI and server
-fastapi==0.104.1
-uvicorn[standard]==0.24.0
-python-multipart==0.0.6
+fastapi==0.104.1              # Modern, fast web framework for building APIs
+uvicorn[standard]==0.24.0      # ASGI server for running FastAPI applications
+python-multipart==0.0.6           # Handling multipart/form-data requests
 
 # ML/AI dependencies (DeepSeek-OCR official requirements)
-transformers==4.46.3
-tokenizers==0.20.3
-huggingface-hub>=0.30.0
-accelerate>=0.25.0
-torch>=2.0.0
-torchvision>=0.15.0
-sentencepiece==0.1.99
-protobuf>=3.20.0
+transformers==4.46.3            # Hugging Face transformers library for model loading
+tokenizers==0.20.3             # Tokenization library for text processing
+huggingface-hub>=0.30.0          # Hugging Face model hub integration
+accelerate>=0.25.0              # PyTorch acceleration library
+torch>=2.0.0                   # PyTorch deep learning framework
+torchvision>=0.15.0             # Computer vision library for PyTorch
+sentencepiece==0.1.99            # Tokenizer library used by transformers
+protobuf>=3.20.0                # Protocol buffers for data serialization
 
 # Image processing (DeepSeek-OCR requirements)
-Pillow>=10.0.0
-opencv-python>=4.8.0
-matplotlib>=3.7.0
-PyMuPDF>=1.23.0
-img2pdf>=0.4.0
+Pillow>=10.0.0                  # Image processing library
+opencv-python>=4.8.0             # Computer vision library
+matplotlib>=3.7.0                # Plotting and visualization
+PyMuPDF>=1.23.0                 # PDF processing library
+img2pdf>=0.4.0                  # Image to PDF conversion
 
 # Data handling (DeepSeek-OCR requirements)
-addict>=2.4.0
-numpy>=1.24.0
-einops>=0.6.0
-easydict>=1.10
+addict>=2.4.0                    # Dictionary-like container for Python
+numpy>=1.24.0,<2.0.0            # Numerical computing library
+einops>=0.6.0                    # Einstein operations for tensors
+easydict>=1.10                    # Dictionary subclass with attribute access
 
 # Data validation
-pydantic==2.5.0
-pydantic-settings==2.1.0
+pydantic==2.5.0                  # Data validation using Python type annotations
+pydantic-settings==2.1.0          # Settings management for Pydantic
 
 # Utilities
-aiofiles==23.2.1
-python-dotenv==1.0.0
+aiofiles==23.2.1                  # File operations with async support
+python-dotenv==1.0.0              # Load environment variables from .env files
