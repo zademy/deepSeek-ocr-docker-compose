@@ -1,65 +1,65 @@
 # ⚡ DeepSeek OCR - Quick Start
 
-## 🎯 ¿Qué es esto?
+## 🎯 What is this?
 
-**DeepSeek OCR** es una solución completa de reconocimiento óptico de caracteres (OCR) usando IA de última generación. Este proyecto incluye:
+**DeepSeek OCR** is a complete optical character recognition (OCR) solution using state-of-the-art AI. This project includes:
 
-- ✅ **Modelo DeepSeek-OCR** - IA open source de 6.6GB optimizada para OCR
-- ✅ **API REST** - Backend con FastAPI para integración fácil
-- ✅ **Interfaz Web** - Frontend moderno para usar sin código
-- ✅ **Docker Compose** - Deploy completo en minutos
+- ✅ **DeepSeek-OCR Model** - 6.6GB open source AI optimized for OCR
+- ✅ **REST API** - FastAPI backend for easy integration
+- ✅ **Web Interface** - Modern frontend for code-free usage
+- ✅ **Docker Compose** - Complete deployment in minutes
 
-## 📋 Requisitos Mínimos
+## 📋 Minimum Requirements
 
 - **Docker** 20.10+
 - **Docker Compose** 2.0+
 - **8GB RAM**
-- **10GB espacio disco**
-- **(Opcional) GPU NVIDIA** con CUDA 11.8+ para mejor rendimiento
+- **10GB disk space**
+- **(Optional) NVIDIA GPU** with CUDA 11.8+ for better performance
 
-## 🚀 Instalación en 3 Pasos
+## 🚀 Installation in 3 Steps
 
-### 1️⃣ Preparar el entorno
+### 1️⃣ Prepare Environment
 
 ```bash
-# Copiar configuración
+# Copy configuration
 cp .env.example .env
 
-# (Opcional) Editar configuración
+# (Optional) Edit configuration
 # nano .env
 ```
 
-### 2️⃣ Iniciar servicios
+### 2️⃣ Start Services
 
 ```bash
-# Construir e iniciar
+# Build and start
 docker-compose up -d
 
-# Ver logs
+# View logs
 docker-compose logs -f
 ```
 
-### 3️⃣ Usar!
+### 3️⃣ Use it!
 
 - **Web**: http://localhost:3000
 - **API Docs**: http://localhost:8000/docs
 - **Health**: http://localhost:8000/health
 
-## 📖 Uso Básico
+## 📖 Basic Usage
 
-### Interfaz Web
+### Web Interface
 
-1. Abre http://localhost:3000
-2. Arrastra una imagen
-3. Selecciona el modo (recomendado: "Markdown")
-4. Click en "Procesar OCR"
-5. Copia o descarga el resultado
+1. Open http://localhost:3000
+2. Drag and drop an image
+3. Select mode (recommended: "Markdown")
+4. Click "Process OCR"
+5. Copy or download the result
 
 ### API (cURL)
 
 ```bash
 curl -X POST "http://localhost:8000/api/ocr" \
-  -F "file=@documento.jpg" \
+  -F "file=@document.jpg" \
   -F "mode=markdown"
 ```
 
@@ -68,7 +68,7 @@ curl -X POST "http://localhost:8000/api/ocr" \
 ```python
 import requests
 
-files = {'file': open('imagen.jpg', 'rb')}
+files = {'file': open('image.jpg', 'rb')}
 data = {'mode': 'markdown'}
 
 response = requests.post(
@@ -80,34 +80,34 @@ response = requests.post(
 print(response.json()['text'])
 ```
 
-## 🎨 Modos Disponibles
+## 🎨 Available Modes
 
-| Modo | Velocidad | Mejor Para |
-|------|-----------|------------|
-| `free_ocr` | ⚡⚡⚡ | Texto simple rápido |
-| `markdown` | ⚡⚡ | Documentos estructurados |
-| `grounding` | ⚡ | Texto + coordenadas |
-| `parse_figure` | ⚡⚡ | Gráficos y tablas |
-| `detailed` | ⚡⚡⚡ | Descripción de imagen |
+| Mode | Speed | Best For |
+|------|-------|----------|
+| `free_ocr` | ⚡⚡⚡ | Fast simple text |
+| `markdown` | ⚡⚡ | Structured documents |
+| `grounding` | ⚡ | Text + coordinates |
+| `parse_figure` | ⚡⚡ | Charts and tables |
+| `detailed` | ⚡⚡⚡ | Image description |
 
-## 📊 Ejemplos de Uso
+## 📊 Usage Examples
 
-### Digitalizar Factura
+### Digitize Invoice
 
 ```bash
 curl -X POST "http://localhost:8000/api/ocr" \
-  -F "file=@factura.jpg" \
+  -F "file=@invoice.jpg" \
   -F "mode=markdown" \
-  -F "custom_prompt=<image>\nExtrae: número, fecha, total"
+  -F "custom_prompt=<image>\nExtract: number, date, total"
 ```
 
-### Procesar Múltiples Imágenes
+### Process Multiple Images
 
 ```python
 from pathlib import Path
 import requests
 
-for img in Path('documentos/').glob('*.jpg'):
+for img in Path('documents/').glob('*.jpg'):
     files = {'file': open(img, 'rb')}
     data = {'mode': 'markdown'}
     
@@ -117,128 +117,127 @@ for img in Path('documentos/').glob('*.jpg'):
         data=data
     ).json()
     
-    # Guardar resultado
+    # Save result
     with open(f'output/{img.stem}.txt', 'w') as f:
         f.write(result['text'])
 ```
 
-## 🔧 Comandos Útiles
+## 🔧 Useful Commands
 
 ```bash
-# Ver logs en tiempo real
+# View real-time logs
 docker-compose logs -f
 
-# Reiniciar servicios
+# Restart services
 docker-compose restart
 
-# Detener todo
+# Stop everything
 docker-compose down
 
-# Ver estado
+# Check status
 docker-compose ps
 
-# Verificar salud
+# Verify health
 curl http://localhost:8000/health
 ```
 
-## 🐛 Solución Rápida de Problemas
+## 🐛 Quick Troubleshooting
 
-### API no carga el modelo
+### API not loading model
 
 ```bash
-# Ver logs
+# View logs
 docker-compose logs deepseek-ocr-api
 
-# Reiniciar
+# Restart
 docker-compose restart deepseek-ocr-api
 ```
 
-### GPU no detectada
+### GPU not detected
 
 ```bash
-# Verificar NVIDIA Docker
+# Verify NVIDIA Docker
 docker run --rm --gpus all nvidia/cuda:11.8.0-base-ubuntu22.04 nvidia-smi
 ```
 
-### Procesamiento muy lento
+### Very slow processing
 
-**Solución**: Asegúrate de usar GPU. Si no tienes GPU, reduce la resolución:
+**Solution**: Make sure to use GPU. If you don't have GPU, reduce resolution:
 
 ```yaml
-# En docker-compose.yml
+# In docker-compose.yml
 environment:
   - BASE_SIZE=640  # default: 1024
 ```
 
 ### Out of Memory
 
-**Solución**: Reduce resolución o usa imágenes más pequeñas:
+**Solution**: Reduce resolution or use smaller images:
 
 ```python
-# Redimensionar imagen antes de enviar
+# Resize image before sending
 from PIL import Image
-img = Image.open('grande.jpg')
+img = Image.open('large.jpg')
 img.thumbnail((1024, 1024))
-img.save('pequena.jpg')
+img.save('small.jpg')
 ```
 
-## 📈 Rendimiento Esperado
+## 📈 Expected Performance
 
-Con **GPU NVIDIA A100**:
-- Free OCR: ~24s por imagen
-- Markdown: ~39s por imagen
-- Grounding: ~58s por imagen
-- Detailed: ~9s por imagen
+With **NVIDIA A100 GPU**:
+- Free OCR: ~24s per image
+- Markdown: ~39s per image
+- Grounding: ~58s per image
+- Detailed: ~9s per image
 
-Con **CPU**: 3-5x más lento
+With **CPU**: 3-5x slower
 
-## 🔒 Seguridad
+## 🔒 Security
 
-⚠️ **Para desarrollo local solamente**
+⚠️ **For local development only**
 
-Si expones públicamente:
-- Añade autenticación
-- Configura rate limiting
-- Usa HTTPS
-- Valida archivos estrictamente
+If you expose publicly:
+- Add authentication
+- Configure rate limiting
+- Use HTTPS
+- Validate files strictly
 
-## 📚 Documentación Completa
+## 📚 Complete Documentation
 
-- **README.md** - Visión general y features
-- **USAGE_GUIDE.md** - Guía detallada de uso
-- **COMANDOS_UTILES.md** - Referencia de comandos
-- **test_api.py** - Script de pruebas
+- **../README.md** - Overview and features
+- **USAGE_GUIDE.md** - Detailed usage guide
+- **test_api.py** - Test script
 
-## 🔗 Links Importantes
+## 🔗 Important Links
 
-- [Repo Original DeepSeek-OCR](https://github.com/deepseek-ai/DeepSeek-OCR)
-- [Modelo en HuggingFace](https://huggingface.co/deepseek-ai/DeepSeek-OCR)
-- [FastAPI Docs](http://localhost:8000/docs) (cuando esté corriendo)
+- [Original DeepSeek-OCR Repo](https://github.com/deepseek-ai/DeepSeek-OCR)
+- [Model on HuggingFace](https://huggingface.co/deepseek-ai/DeepSeek-OCR)
+- [FastAPI Docs](http://localhost:8000/docs) (when running)
 
 ## 💡 Tips
 
-1. **Primera vez**: El modelo se descarga (~6.6GB), puede tardar 10-20 min
-2. **GPU vs CPU**: GPU es 3-5x más rápida
-3. **Mejor calidad**: Usa imágenes de 1024×1024 píxeles
-4. **Mejor velocidad**: Usa modo `free_ocr`
-5. **Batch processing**: Procesa múltiples imágenes en paralelo con Python
+1. **First time**: Model downloads (~6.6GB), may take 10-20 min
+2. **GPU vs CPU**: GPU is 3-5x faster
+3. **Best quality**: Use 1024×1024 pixel images
+4. **Best speed**: Use `free_ocr` mode
+5. **Batch processing**: Process multiple images in parallel with Python
 
-## 🆘 Ayuda
+## 🆘 Help
 
-1. Revisa logs: `docker-compose logs -f`
-2. Verifica salud: `curl http://localhost:8000/health`
-3. Lee USAGE_GUIDE.md
-4. Ejecuta test: `python test_api.py imagen.jpg`
+1. Check logs: `docker-compose logs -f`
+2. Verify health: `curl http://localhost:8000/health`
+3. Read USAGE_GUIDE.md
+4. Run test: `python test_api.py image.jpg`
 
-## 🎉 ¡Listo!
+## 🎉 All Set!
 
-Ahora tienes un sistema completo de OCR con IA. 
+You now have a complete AI-powered OCR system.
 
-**Próximos pasos**:
-- Prueba con tus propias imágenes
-- Experimenta con diferentes modos
-- Integra el API en tus aplicaciones
-- Lee USAGE_GUIDE.md para casos avanzados
+**Next steps**:
+- Test with your own images
+- Experiment with different modes
+- Integrate the API into your applications
+- Read USAGE_GUIDE.md for advanced cases
 
 ---
 

@@ -152,35 +152,35 @@ Edit `docker-compose.yml` or create a `.env` file to customize:
 
 ```
 environment:
-  - CUDA_VISIBLE_DEVICES=0          # GPU a usar
+  - CUDA_VISIBLE_DEVICES=0          # GPU to use
   - MODEL_NAME=deepseek-ai/DeepSeek-OCR
-  - MAX_IMAGE_SIZE=1024              # Resolución máxima
+  - MAX_IMAGE_SIZE=1024              # Maximum resolution
 ```
 
-## 📖 Uso del API
+## 📖 API Usage
 
-### Endpoint: OCR de Imagen
+### Image OCR Endpoint
 
 ```
 curl -X POST "http://localhost:8000/api/ocr" \
-  -F "file=@imagen.jpg" \
+  -F "file=@image.jpg" \
   -F "mode=markdown"
 ```
 
-### Modos Disponibles
+### Available Modes
 
-| Modo | Descripción | Uso Recomendado |
+| Mode | Description | Recommended Use |
 |------|-------------|-----------------|
-| `free_ocr` | OCR rápido sin estructura | Texto general |
-| `markdown` | Convierte a Markdown | Documentos |
-| `grounding` | OCR + coordenadas | Análisis detallado |
-| `detailed` | Descripción de imagen | Análisis visual |
+| `free_ocr` | Fast OCR without structure | General text |
+| `markdown` | Converts to Markdown | Documents |
+| `grounding` | OCR + coordinates | Detailed analysis |
+| `detailed` | Image description | Visual analysis |
 
-### Ejemplo de Respuesta
+### Response Example
 
 ```
 {
-  "text": "# Título del Documento\n\nContenido extraído...",
+  "text": "# Document Title\n\nExtracted content...",
   "mode": "markdown",
   "processing_time": 2.5,
   "image_size": [1024, 768],
@@ -188,45 +188,45 @@ curl -X POST "http://localhost:8000/api/ocr" \
 }
 ```
 
-## 🎯 Ejemplos de Prompts
+## 🎯 Prompt Examples
 
 ```
-# Documento
+# Document
 "<image>\n<|grounding|>Convert the document to markdown."
 
-# Imagen general
+# General image
 "<image>\n<|grounding|>OCR this image."
 
-# Sin formato
+# No format
 "<image>\nFree OCR."
 
-# Figuras
+# Figures
 "<image>\nParse the figure."
 
-# Descripción detallada
+# Detailed description
 "<image>\nDescribe this image in detail."
 ```
 
-## 🐳 Comandos Docker
+## 🐳 Docker Commands
 
 ```
-# Iniciar servicios
+# Start services
 docker-compose up -d
 
-# Ver logs
+# View logs
 docker-compose logs -f
 
-# Detener servicios
+# Stop services
 docker-compose down
 
-# Reiniciar
+# Restart
 docker-compose restart
 
-# Reconstruir imágenes
+# Rebuild images
 docker-compose build --no-cache
 ```
 
-## 🔍 Monitoreo
+## 🔍 Monitoring
 
 ### Health Check
 
@@ -234,7 +234,7 @@ docker-compose build --no-cache
 curl http://localhost:8000/health
 ```
 
-### Logs del API
+### API Logs
 
 ```
 docker-compose logs -f deepseek-ocr-api
@@ -244,22 +244,22 @@ docker-compose logs -f deepseek-ocr-api
 
 Benchmark results with 3503×1668 pixels image on NVIDIA A100 40GB:
 
-| Modo | Tiempo | Calidad | Estructura |
+| Mode | Time | Quality | Structure |
 |------|--------|---------|------------|
-| Free OCR | ~24s | ⭐⭐⭐ | Básica |
-| Markdown | ~39s | ⭐⭐⭐ | Completa |
+| Free OCR | ~24s | ⭐⭐⭐ | Basic |
+| Markdown | ~39s | ⭐⭐⭐ | Complete |
 | Grounding | ~58s | ⭐⭐ | + Coords |
-| Detailed | ~9s | N/A | Descripción |
+| Detailed | ~9s | N/A | Description |
 
 *Hardware: NVIDIA A100 40GB*
 
-## 🛠️ Resoluciones Soportadas
+## 🛠️ Supported Resolutions
 
 - **Tiny**: 512×512 (64 tokens)
 - **Small**: 640×640 (100 tokens)
-- **Base**: 1024×1024 (256 tokens) - Recomendado
+- **Base**: 1024×1024 (256 tokens) - Recommended
 - **Large**: 1280×1280 (400 tokens)
-- **Dynamic**: múltiples crops + base
+- **Dynamic**: multiple crops + base
 
 ## 🐛 Troubleshooting
 
@@ -365,7 +365,7 @@ For security concerns, please review our [Security Policy](SECURITY.md).
 
 **Version**: 1.0.0  
 **Status**: Active Development  
-**Last Updated**: January 2025  
+**Last Updated**: October 2025
 **Model**: DeepSeek-OCR (deepseek-ai)  
 **Purpose**: Development and Testing Only
 

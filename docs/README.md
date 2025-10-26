@@ -5,7 +5,7 @@ Welcome to the complete documentation for DeepSeek OCR!
 ## 🚀 Quick Navigation
 
 ### New to DeepSeek OCR?
-👉 **Start here**: [START_HERE.md](START_HERE.md)
+👉 **Start here**: [../README.md](../README.md)
 
 ### Want to get it running quickly?
 👉 **Quick start**: [QUICKSTART.md](QUICKSTART.md) (3 minutes)
@@ -20,7 +20,7 @@ Welcome to the complete documentation for DeepSeek OCR!
 ### Getting Started
 | Document | Description | Reading Time |
 |----------|-------------|--------------|
-| [START_HERE.md](START_HERE.md) | 👋 Best place to start - quick overview | 2 min |
+| [../README.md](../README.md) | 👋 Main project documentation | 5 min |
 | [QUICKSTART.md](QUICKSTART.md) | ⚡ Get running in 3 steps | 5 min |
 | [WINDOWS_SETUP.md](WINDOWS_SETUP.md) | 🪟 Complete Windows setup guide | 10 min |
 
@@ -28,13 +28,6 @@ Welcome to the complete documentation for DeepSeek OCR!
 | Document | Description | Reading Time |
 |----------|-------------|--------------|
 | [USAGE_GUIDE.md](USAGE_GUIDE.md) | 📖 Complete usage manual with examples | 30 min |
-| [COMANDOS_UTILES.md](COMANDOS_UTILES.md) | 🛠️ Useful commands reference | 15 min |
-| [NOTAS_IMPORTANTE.md](NOTAS_IMPORTANTE.md) | 📌 Important technical notes | 20 min |
-
-### Project Information
-| Document | Description | Reading Time |
-|----------|-------------|--------------|
-| [RESUMEN_PROYECTO.md](RESUMEN_PROYECTO.md) | 📋 Project summary and overview | 10 min |
 
 ---
 
@@ -50,22 +43,18 @@ Welcome to the complete documentation for DeepSeek OCR!
 #### Use the API
 1. Read [QUICKSTART.md](QUICKSTART.md) to get it running
 2. Check [USAGE_GUIDE.md](USAGE_GUIDE.md) section "API Usage"
-3. Use [COMANDOS_UTILES.md](COMANDOS_UTILES.md) for API examples
 
 #### Deploy to Production
-1. Read [NOTAS_IMPORTANTE.md](NOTAS_IMPORTANTE.md) - Security section
+1. Read [../SECURITY.md](../SECURITY.md) - Security considerations
 2. Read [USAGE_GUIDE.md](USAGE_GUIDE.md) - Production tips
-3. Follow [COMANDOS_UTILES.md](COMANDOS_UTILES.md) - Security setup
 
 #### Troubleshoot Issues
 1. Check [USAGE_GUIDE.md](USAGE_GUIDE.md) - Troubleshooting section
-2. Review [NOTAS_IMPORTANTE.md](NOTAS_IMPORTANTE.md) - Known Issues
-3. If on Windows, check [WINDOWS_SETUP.md](WINDOWS_SETUP.md) - Common Problems
+2. If on Windows, check [WINDOWS_SETUP.md](WINDOWS_SETUP.md) - Common Problems
 
 #### Understand the Technology
-1. Read [RESUMEN_PROYECTO.md](RESUMEN_PROYECTO.md) for overview
-2. Check [NOTAS_IMPORTANTE.md](NOTAS_IMPORTANTE.md) for technical details
-3. Review the original repo: https://github.com/deepseek-ai/DeepSeek-OCR
+1. Read [../README.md](../README.md) for overview
+2. Review the original repo: https://github.com/deepseek-ai/DeepSeek-OCR
 
 ---
 
@@ -73,13 +62,10 @@ Welcome to the complete documentation for DeepSeek OCR!
 
 ```
 docs/
-├── START_HERE.md           # 👋 Start here
-├── QUICKSTART.md           # ⚡ Quick start guide
-├── WINDOWS_SETUP.md        # 🪟 Windows setup
-├── USAGE_GUIDE.md          # 📖 Complete manual
-├── COMANDOS_UTILES.md      # 🛠️ Commands reference
-├── NOTAS_IMPORTANTE.md     # 📌 Technical notes
-└── RESUMEN_PROYECTO.md     # 📋 Project summary
+├── README.md              # 👋 This file - documentation index
+├── QUICKSTART.md          # ⚡ Quick start guide
+├── USAGE_GUIDE.md         # 📖 Complete manual
+└── WINDOWS_SETUP.md       # 🪟 Windows setup
 ```
 
 ---
@@ -88,10 +74,9 @@ docs/
 
 Looking for something specific? Use Ctrl+F (or Cmd+F) in these documents:
 
-- **Docker commands** → [COMANDOS_UTILES.md](COMANDOS_UTILES.md)
 - **API examples** → [USAGE_GUIDE.md](USAGE_GUIDE.md)
 - **Error messages** → [WINDOWS_SETUP.md](WINDOWS_SETUP.md) or [USAGE_GUIDE.md](USAGE_GUIDE.md)
-- **Performance tips** → [NOTAS_IMPORTANTE.md](NOTAS_IMPORTANTE.md)
+- **Performance tips** → [USAGE_GUIDE.md](USAGE_GUIDE.md)
 - **OCR modes** → [USAGE_GUIDE.md](USAGE_GUIDE.md)
 
 ---
@@ -99,7 +84,7 @@ Looking for something specific? Use Ctrl+F (or Cmd+F) in these documents:
 ## 🎓 Learning Path
 
 ### Beginner Path (Total: ~20 min)
-1. [START_HERE.md](START_HERE.md) - 2 min
+1. [../README.md](../README.md) - 5 min
 2. [QUICKSTART.md](QUICKSTART.md) - 5 min
 3. Try the web interface - 10 min
 4. Read relevant sections of [USAGE_GUIDE.md](USAGE_GUIDE.md) - as needed
@@ -107,21 +92,21 @@ Looking for something specific? Use Ctrl+F (or Cmd+F) in these documents:
 ### Developer Path (Total: ~45 min)
 1. [QUICKSTART.md](QUICKSTART.md) - 5 min
 2. [USAGE_GUIDE.md](USAGE_GUIDE.md) - API section - 15 min
-3. [COMANDOS_UTILES.md](COMANDOS_UTILES.md) - 15 min
-4. [NOTAS_IMPORTANTE.md](NOTAS_IMPORTANTE.md) - 10 min
+3. [../DOCKER_OPTIMIZATION.md](../DOCKER_OPTIMIZATION.md) - 10 min
+4. [CONTRIBUTING.md](../CONTRIBUTING.md) - 15 min
 
 ### DevOps Path (Total: ~50 min)
 1. [QUICKSTART.md](QUICKSTART.md) - 5 min
 2. [USAGE_GUIDE.md](USAGE_GUIDE.md) - 20 min
-3. [NOTAS_IMPORTANTE.md](NOTAS_IMPORTANTE.md) - 15 min
-4. [COMANDOS_UTILES.md](COMANDOS_UTILES.md) - 10 min
+3. [DOCKER_OPTIMIZATION.md](../DOCKER_OPTIMIZATION.md) - 15 min
+4. [WINDOWS_SETUP.md](WINDOWS_SETUP.md) - 10 min
 
 ---
 
 ## 💡 Tips for Reading Documentation
 
 1. **Don't read everything** - Use the table of contents
-2. **Start with START_HERE.md** - It points you to what you need
+2. **Start with README.md** - It points you to what you need
 3. **Use search** - Ctrl+F is your friend
 4. **Follow links** - Documents reference each other
 5. **Check examples** - Most guides have practical examples
@@ -161,22 +146,7 @@ Looking for something specific? Use Ctrl+F (or Cmd+F) in these documents:
 
 [← Back to main README](../README.md)
 
-# Documentation
-
-This folder contains detailed documentation for the DeepSeek OCR project.
-
-## Available Guides
-
-### Quick Start
-- **[QUICKSTART.md](QUICKSTART.md)** - Get up and running in 5 minutes
-
-### Complete Guides
-- **[USAGE_GUIDE.md](USAGE_GUIDE.md)** - Comprehensive usage manual with examples
-- **[WINDOWS_SETUP.md](WINDOWS_SETUP.md)** - Windows-specific setup instructions
-
-## Main Documentation
-
-For general information, see the main [README.md](../README.md) in the project root.
+---
 
 ## Additional Resources
 

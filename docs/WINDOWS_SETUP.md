@@ -1,175 +1,175 @@
-# 🪟 Configuración en Windows - DeepSeek OCR
+# 🪟 Windows Setup - DeepSeek OCR
 
-## 📋 Requisitos Previos
+## 📋 Prerequisites
 
-### 1. Docker Desktop para Windows
+### 1. Docker Desktop for Windows
 
-**Descargar e instalar:**
-- Descarga desde: https://www.docker.com/products/docker-desktop/
-- Versión mínima: 4.0+
-- Asegúrate de habilitar **WSL 2** durante la instalación
+**Download and install:**
+- Download from: https://www.docker.com/products/docker-desktop/
+- Minimum version: 4.0+
+- Make sure to enable **WSL 2** during installation
 
-**Verificar instalación:**
+**Verify installation:**
 ```powershell
 docker --version
 docker-compose --version
 ```
 
-### 2. (Opcional) GPU NVIDIA
+### 2. (Optional) NVIDIA GPU
 
-**Si tienes tarjeta NVIDIA y quieres usar GPU:**
+**If you have NVIDIA card and want to use GPU:**
 
-1. **Drivers NVIDIA actualizados**
-   - Descarga desde: https://www.nvidia.com/download/index.aspx
-   - Versión mínima: 525.60+
+1. **Updated NVIDIA drivers**
+   - Download from: https://www.nvidia.com/download/index.aspx
+   - Minimum version: 525.60+
 
-2. **CUDA Toolkit** (si usas WSL2)
-   - Ya incluido en Docker, no necesitas instalar CUDA en Windows
+2. **CUDA Toolkit** (if using WSL2)
+   - Already included in Docker, no need to install CUDA on Windows
 
-3. **Habilitar GPU en Docker Desktop**
-   - Abre Docker Desktop
+3. **Enable GPU in Docker Desktop**
+   - Open Docker Desktop
    - Settings → Resources → WSL Integration
-   - Habilita tu distribución WSL2
+   - Enable your WSL2 distribution
    - Settings → General → Use WSL 2 based engine ✓
 
-**Verificar GPU:**
+**Verify GPU:**
 ```powershell
-# En PowerShell
+# In PowerShell
 docker run --rm --gpus all nvidia/cuda:11.8.0-base-ubuntu22.04 nvidia-smi
 ```
 
-## 🚀 Instalación Paso a Paso
+## 🚀 Step-by-Step Installation
 
-### Opción 1: PowerShell (Recomendado)
+### Option 1: PowerShell (Recommended)
 
 ```powershell
-# 1. Navegar al directorio
+# 1. Navigate to directory
 cd C:\Users\Deep\Documents\workspace\deepseek-ocr
 
-# 2. Copiar configuración
+# 2. Copy configuration
 Copy-Item .env.example .env
 
-# 3. Iniciar servicios
+# 3. Start services
 docker-compose up -d
 
-# 4. Ver logs
+# 4. View logs
 docker-compose logs -f
 ```
 
-### Opción 2: WSL2 (Linux en Windows)
+### Option 2: WSL2 (Linux on Windows)
 
 ```bash
-# En WSL2 (Ubuntu, etc.)
+# In WSL2 (Ubuntu, etc.)
 cd /mnt/c/Users/Deep/Documents/workspace/deepseek-ocr
 
-# Copiar configuración
+# Copy configuration
 cp .env.example .env
 
-# Iniciar
+# Start
 docker-compose up -d
 
-# Ver logs
+# View logs
 docker-compose logs -f
 ```
 
-### Opción 3: Git Bash
+### Option 3: Git Bash
 
 ```bash
-# Similar a Linux
+# Similar to Linux
 cd /c/Users/Deep/Documents/workspace/deepseek-ocr
 cp .env.example .env
 docker-compose up -d
 ```
 
-## ⚙️ Configuración Específica de Windows
+## ⚙️ Windows-Specific Configuration
 
-### Ajustar Variables de Entorno
+### Adjust Environment Variables
 
-**Editar `.env`** (usa Notepad o VS Code):
+**Edit `.env`** (use Notepad or VS Code):
 
 ```env
-# Para GPU NVIDIA
+# For NVIDIA GPU
 CUDA_VISIBLE_DEVICES=0
 
-# Para CPU (si no tienes GPU o hay problemas)
+# For CPU (if you don't have GPU or have problems)
 CUDA_VISIBLE_DEVICES=-1
 
-# Otras configuraciones
+# Other configurations
 MODEL_NAME=deepseek-ai/DeepSeek-OCR
 BASE_SIZE=1024
 IMAGE_SIZE=640
 ```
 
-### Configurar Docker Desktop
+### Configure Docker Desktop
 
-1. **Aumentar memoria asignada**
+1. **Increase allocated memory**
    - Docker Desktop → Settings → Resources
-   - Memory: Mínimo 8GB, recomendado 12GB+
-   - CPU: Mínimo 4 cores, recomendado 8+
+   - Memory: Minimum 8GB, recommended 12GB+
+   - CPU: Minimum 4 cores, recommended 8+
    - Swap: 2GB
    - Apply & Restart
 
-2. **Configurar volúmenes**
+2. **Configure volumes**
    - Docker Desktop → Settings → Resources → File Sharing
-   - Añadir: `C:\Users\Deep\Documents\workspace\deepseek-ocr`
+   - Add: `C:\Users\Deep\Documents\workspace\deepseek-ocr`
 
-## 🔧 Comandos en PowerShell
+## 🔧 PowerShell Commands
 
 ```powershell
-# Iniciar servicios
+# Start services
 docker-compose up -d
 
-# Ver logs
+# View logs
 docker-compose logs -f
 
-# Ver estado
+# Check status
 docker-compose ps
 
-# Detener servicios
+# Stop services
 docker-compose down
 
-# Reiniciar
+# Restart
 docker-compose restart
 
-# Reconstruir imágenes
+# Rebuild images
 docker-compose build --no-cache
 
-# Ver uso de recursos
+# View resource usage
 docker stats
 
 # Health check
 curl http://localhost:8000/health
 
-# Test con imagen
+# Test with image
 curl -X POST "http://localhost:8000/api/ocr" `
   -F "file=@C:\Users\Deep\Pictures\test.jpg" `
   -F "mode=markdown"
 ```
 
-**Nota**: En PowerShell, usar backtick `` ` `` para continuar líneas
+**Note**: In PowerShell, use backtick `` ` `` to continue lines
 
-## 🐛 Problemas Comunes en Windows
+## 🐛 Common Windows Problems
 
 ### 1. "Docker daemon not running"
 
-**Solución:**
-- Abre Docker Desktop
-- Espera a que inicie completamente (icono en la bandeja del sistema)
+**Solution:**
+- Open Docker Desktop
+- Wait for it to start completely (icon in system tray)
 
 ### 2. "Error response from daemon: Conflict"
 
-**Causa**: Puertos 8000 o 3000 ya en uso
+**Cause**: Ports 8000 or 3000 already in use
 
-**Solución:**
+**Solution:**
 ```powershell
-# Ver qué está usando el puerto
+# See what's using the port
 netstat -ano | findstr :8000
 netstat -ano | findstr :3000
 
-# Matar proceso (reemplaza <PID> con el número que encontraste)
+# Kill process (replace <PID> with the number you found)
 taskkill /PID <PID> /F
 
-# O cambiar puertos en docker-compose.yml:
+# Or change ports in docker-compose.yml:
 # ports:
 #   - "8001:8000"  # API
 #   - "3001:80"    # Web
@@ -177,108 +177,108 @@ taskkill /PID <PID> /F
 
 ### 3. "Drive has not been shared"
 
-**Solución:**
+**Solution:**
 - Docker Desktop → Settings → Resources → File Sharing
-- Añadir la unidad C:\ o el directorio específico
+- Add C:\ drive or specific directory
 - Apply & Restart
 
-### 4. GPU no detectada
+### 4. GPU not detected
 
-**Verificar paso a paso:**
+**Step-by-step verification:**
 
 ```powershell
-# 1. Verificar drivers NVIDIA
+# 1. Verify NVIDIA drivers
 nvidia-smi
 
-# 2. Verificar Docker tiene acceso a GPU
+# 2. Verify Docker has GPU access
 docker run --rm --gpus all nvidia/cuda:11.8.0-base-ubuntu22.04 nvidia-smi
 
-# 3. Si falla, asegurarse que Docker Desktop tiene GPU habilitada:
-# Settings → General → Use the WSL 2 based engine ✓
+# 3. If it fails, make sure Docker Desktop has GPU enabled:
+# Settings → General → Use WSL 2 based engine ✓
 # Settings → Resources → WSL Integration → Enable for your distro
 ```
 
-**Si sigue fallando**, usa CPU:
+**If it still fails**, use CPU:
 ```env
-# En .env
+# In .env
 CUDA_VISIBLE_DEVICES=-1
 ```
 
-### 5. "path not found" o problemas con rutas
+### 5. "path not found" or path problems
 
-**Causa**: Diferencias Windows/Linux paths
+**Cause**: Windows/Linux path differences
 
-**Solución en docker-compose.yml:**
+**Solution in docker-compose.yml:**
 ```yaml
-# En Windows, asegúrate de usar rutas relativas
+# On Windows, make sure to use relative paths
 volumes:
-  - ./uploads:/app/uploads      # ✓ Correcto
-  - ./outputs:/app/outputs      # ✓ Correcto
+  - ./uploads:/app/uploads      # ✓ Correct
+  - ./outputs:/app/outputs      # ✓ Correct
   
-# NO usar rutas absolutas de Windows:
-# - C:\Users\...:              # ✗ Incorrecto
+# DO NOT use absolute Windows paths:
+# - C:\Users\...:              # ✗ Incorrect
 ```
 
-### 6. Permisos en carpetas
+### 6. Folder permissions
 
-**Solución:**
+**Solution:**
 ```powershell
-# Dar permisos completos a las carpetas
+# Give full permissions to folders
 icacls uploads /grant Everyone:F
 icacls outputs /grant Everyone:F
 ```
 
-### 7. "EOF" o error al construir imagen
+### 7. "EOF" or error building image
 
-**Causa**: Archivos con CRLF (Windows line endings)
+**Cause**: Files with CRLF (Windows line endings)
 
-**Solución:**
+**Solution:**
 ```powershell
-# Convertir a LF (usar Git Bash o WSL)
+# Convert to LF (use Git Bash or WSL)
 dos2unix backend/Dockerfile
 dos2unix docker-compose.yml
 
-# O configurar Git:
+# Or configure Git:
 git config --global core.autocrlf input
 ```
 
-## 🖥️ Usar con WSL2 (Recomendado)
+## 🖥️ Using with WSL2 (Recommended)
 
-**Ventajas**:
-- Mejor rendimiento
-- Más compatible con scripts Linux
-- Menos problemas de paths
+**Advantages**:
+- Better performance
+- More compatible with Linux scripts
+- Fewer path problems
 
 **Setup**:
 
-1. **Instalar WSL2**
+1. **Install WSL2**
    ```powershell
-   # En PowerShell como Administrador
+   # In PowerShell as Administrator
    wsl --install
    ```
 
-2. **Instalar Ubuntu**
+2. **Install Ubuntu**
    ```powershell
    wsl --install -d Ubuntu-22.04
    ```
 
-3. **Trabajar desde WSL**
+3. **Work from WSL**
    ```bash
-   # En WSL
+   # In WSL
    cd /mnt/c/Users/Deep/Documents/workspace/deepseek-ocr
    
-   # Copiar configuración
+   # Copy configuration
    cp .env.example .env
    
-   # Iniciar
+   # Start
    docker-compose up -d
    ```
 
-4. **Acceder desde Windows**
-   - Navegador: http://localhost:3000
-   - Todo funciona igual, Docker Desktop maneja la integración
+4. **Access from Windows**
+   - Browser: http://localhost:3000
+   - Everything works the same, Docker Desktop handles integration
 
-## 📁 Estructura de Archivos en Windows
+## 📁 File Structure on Windows
 
 ```
 C:\Users\Deep\Documents\workspace\deepseek-ocr\
@@ -287,9 +287,7 @@ C:\Users\Deep\Documents\workspace\deepseek-ocr\
 ├── README.md
 ├── QUICKSTART.md
 ├── USAGE_GUIDE.md
-├── COMANDOS_UTILES.md
-├── NOTAS_IMPORTANTE.md
-├── WINDOWS_SETUP.md (este archivo)
+├── WINDOWS_SETUP.md (this file)
 ├── docker-compose.yml
 ├── start.sh
 ├── test_api.py
@@ -308,24 +306,24 @@ C:\Users\Deep\Documents\workspace\deepseek-ocr\
 └── outputs\
 ```
 
-## 🧪 Testing en Windows
+## 🧪 Testing on Windows
 
-### Con PowerShell
+### With PowerShell
 
 ```powershell
-# Test básico
+# Basic test
 Invoke-WebRequest -Uri "http://localhost:8000/health" | Select-Object -Expand Content
 
-# Test OCR con cURL (si está instalado)
+# Test OCR with cURL (if installed)
 curl -X POST "http://localhost:8000/api/ocr" `
   -F "file=@C:\Users\Deep\Pictures\test.jpg" `
   -F "mode=markdown"
 
-# Con Python
+# With Python
 python test_api.py C:\Users\Deep\Pictures\test.jpg
 ```
 
-### Con Python Script
+### With Python Script
 
 ```python
 # test_windows.py
@@ -360,14 +358,14 @@ else:
     print(f"Image not found: {image_path}")
 ```
 
-Ejecutar:
+Run:
 ```powershell
 python test_windows.py
 ```
 
-## 🎯 Accesos Directos
+## 🎯 Shortcuts
 
-### Crear script de inicio (start.bat)
+### Create startup script (start.bat)
 
 ```bat
 @echo off
@@ -382,7 +380,7 @@ echo.
 pause
 ```
 
-### Crear script de detención (stop.bat)
+### Create stop script (stop.bat)
 
 ```bat
 @echo off
@@ -393,7 +391,7 @@ echo Services stopped!
 pause
 ```
 
-### Crear script de logs (logs.bat)
+### Create logs script (logs.bat)
 
 ```bat
 @echo off
@@ -401,82 +399,82 @@ cd /d "%~dp0"
 docker-compose logs -f
 ```
 
-## 🌐 Acceder desde Otros Dispositivos
+## 🌐 Access from Other Devices
 
-Si quieres acceder desde otro PC en tu red local:
+If you want to access from another PC on your local network:
 
-1. **Obtener tu IP local**
+1. **Get your local IP**
    ```powershell
    ipconfig
-   # Buscar "IPv4 Address" (ej: 192.168.1.100)
+   # Look for "IPv4 Address" (e.g., 192.168.1.100)
    ```
 
-2. **Configurar firewall**
+2. **Configure firewall**
    ```powershell
-   # En PowerShell como Administrador
+   # In PowerShell as Administrator
    New-NetFirewallRule -DisplayName "DeepSeek OCR Web" -Direction Inbound -LocalPort 3000 -Protocol TCP -Action Allow
    New-NetFirewallRule -DisplayName "DeepSeek OCR API" -Direction Inbound -LocalPort 8000 -Protocol TCP -Action Allow
    ```
 
-3. **Acceder desde otro dispositivo**
+3. **Access from another device**
    - Web: http://192.168.1.100:3000
    - API: http://192.168.1.100:8000
 
-## 💡 Tips para Windows
+## 💡 Windows Tips
 
-1. **Usar VS Code**
-   - Abre el proyecto en VS Code
-   - Instala extensión "Docker"
-   - Fácil manejo de containers y logs
+1. **Use VS Code**
+   - Open project in VS Code
+   - Install "Docker" extension
+   - Easy container and log management
 
 2. **Windows Terminal**
-   - Mejor que PowerShell/CMD clásico
-   - Descarga desde Microsoft Store
-   - Soporte para pestañas y WSL
+   - Better than classic PowerShell/CMD
+   - Download from Microsoft Store
+   - Tab support and WSL
 
 3. **Docker Desktop Dashboard**
-   - Ver containers en ejecución
-   - Logs con GUI
-   - Fácil start/stop
+   - View running containers
+   - Logs with GUI
+   - Easy start/stop
 
 4. **Antivirus**
-   - Añade excepciones para Docker Desktop
-   - Excluye carpeta del proyecto si hay lentitud
+   - Add exceptions for Docker Desktop
+   - Exclude project folder if there's slowness
 
-## 🔄 Actualización
+## 🔄 Updates
 
 ```powershell
-# Detener servicios
+# Stop services
 docker-compose down
 
-# Actualizar código (si usas Git)
+# Update code (if using Git)
 git pull
 
-# Reconstruir imágenes
+# Rebuild images
 docker-compose build --no-cache
 
-# Iniciar de nuevo
+# Start again
 docker-compose up -d
 ```
 
-## 🆘 Soporte Específico de Windows
+## 🆘 Windows-Specific Support
 
-### Recursos Útiles
+### Useful Resources
 - [Docker Desktop for Windows Docs](https://docs.docker.com/desktop/windows/)
 - [WSL2 Documentation](https://docs.microsoft.com/en-us/windows/wsl/)
 - [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html)
 
-### Comunidades
+### Communities
 - Docker Community Forums
 - Stack Overflow (tag: docker-desktop)
 - Reddit: r/docker
 
 ---
 
-**¡Listo para usar en Windows!** 🎉
+**Ready to use on Windows!** 🎉
 
-Si tienes problemas, revisa primero:
-1. Docker Desktop está corriendo
-2. Puertos no están ocupados
-3. Tienes suficiente RAM asignada a Docker
-4. Firewall/Antivirus no está bloqueando
+If you have problems, check first:
+1. Docker Desktop is running
+2. Ports are not occupied
+3. You have enough RAM assigned to Docker
+4. Firewall/Antivirus is not blocking

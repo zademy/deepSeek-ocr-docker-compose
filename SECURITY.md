@@ -91,4 +91,4 @@ THE SOFTWARE IS PROVIDED "AS IS" WITHOUT ANY SECURITY GUARANTEES. Users assume a
 
 ---
 
-Last updated: January 2025
+Last updated: October 2025

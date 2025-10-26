@@ -1,129 +1,129 @@
-# 📖 Guía de Uso - DeepSeek OCR
+# 📖 DeepSeek OCR - Usage Guide
 
-## 🎯 Índice
+## 🎯 Table of Contents
 
-1. [Inicio Rápido](#inicio-rápido)
-2. [Uso de la Interfaz Web](#uso-de-la-interfaz-web)
-3. [Uso del API](#uso-del-api)
-4. [Modos de OCR](#modos-de-ocr)
-5. [Ejemplos Prácticos](#ejemplos-prácticos)
-6. [Tips y Mejores Prácticas](#tips-y-mejores-prácticas)
+1. [Quick Start](#quick-start)
+2. [Using the Web Interface](#using-the-web-interface)
+3. [Using the API](#using-the-api)
+4. [OCR Modes](#ocr-modes)
+5. [Practical Examples](#practical-examples)
+6. [Tips and Best Practices](#tips-and-best-practices)
 7. [Troubleshooting](#troubleshooting)
 
 ---
 
-## 🚀 Inicio Rápido
+## 🚀 Quick Start
 
-### Requisitos Previos
+### Prerequisites
 
-- **Docker** y **Docker Compose** instalados
-- **GPU NVIDIA** con CUDA 11.8+ (recomendado, no obligatorio)
-- Al menos **8GB RAM** y **10GB espacio en disco**
+- **Docker** and **Docker Compose** installed
+- **NVIDIA GPU** with CUDA 11.8+ (recommended, not required)
+- At least **8GB RAM** and **10GB disk space**
 
-### Instalación en 3 Pasos
+### Installation in 3 Steps
 
 ```bash
-# 1. Clonar o navegar al directorio
+# 1. Clone or navigate to directory
 cd deepseek-ocr
 
-# 2. Copiar configuración
+# 2. Copy configuration
 cp .env.example .env
 
-# 3. Iniciar servicios
+# 3. Start services
 docker-compose up -d
 ```
 
-**En Linux/Mac:**
+**On Linux/Mac:**
 ```bash
 chmod +x start.sh
 ./start.sh
 ```
 
-### Verificar que Funciona
+### Verify It's Working
 
 ```bash
-# Ver logs
+# View logs
 docker-compose logs -f
 
-# Verificar salud del API
+# Check API health
 curl http://localhost:8000/health
 ```
 
-Accede a: **http://localhost:3000**
+Access: **http://localhost:3000**
 
 ---
 
-## 🖥️ Uso de la Interfaz Web
+## 🖥️ Using the Web Interface
 
-### 1. Subir Imagen
+### 1. Upload Image
 
-- **Arrastra y suelta** una imagen en el área de carga
-- O **haz clic** para seleccionar desde tu computadora
-- Formatos soportados: JPG, PNG, WEBP, PDF
-- Tamaño máximo: 10MB
+- **Drag and drop** an image in the upload area
+- Or **click** to select from your computer
+- Supported formats: JPG, PNG, WEBP, PDF
+- Maximum size: 10MB
 
-### 2. Seleccionar Modo
+### 2. Select Mode
 
-| Modo | Cuándo Usar | Velocidad |
-|------|-------------|-----------|
-| **Markdown** | Documentos con estructura | Media ⚡⚡ |
-| **Free OCR** | Texto simple y rápido | Rápida ⚡⚡⚡ |
-| **Grounding** | Necesitas coordenadas del texto | Lenta ⚡ |
-| **Parse Figure** | Gráficos, tablas, diagramas | Media ⚡⚡ |
-| **Detailed** | Descripción de la imagen | Muy Rápida ⚡⚡⚡ |
+| Mode | When to Use | Speed |
+|------|-------------|-------|
+| **Markdown** | Structured documents | Medium ⚡⚡ |
+| **Free OCR** | Simple and fast text | Fast ⚡⚡⚡ |
+| **Grounding** | Need text coordinates | Slow ⚡ |
+| **Parse Figure** | Charts, tables, diagrams | Medium ⚡⚡ |
+| **Detailed** | Image description | Very Fast ⚡⚡⚡ |
 
-### 3. Procesar
+### 3. Process
 
-- Click en **"Procesar OCR"**
-- Espera 10-60 segundos (dependiendo del modo y GPU)
-- Revisa los resultados
+- Click **"Process OCR"**
+- Wait 10-60 seconds (depending on mode and GPU)
+- Review the results
 
-### 4. Usar Resultados
+### 4. Use Results
 
-- **Copiar** al portapapeles
-- **Descargar** como archivo TXT
-- **Nuevo OCR** para procesar otra imagen
+- **Copy** to clipboard
+- **Download** as TXT file
+- **New OCR** to process another image
 
 ---
 
-## 🔌 Uso del API
+## 🔌 Using the API
 
-### Documentación Interactiva
+### Interactive Documentation
 
-Accede a la documentación Swagger:
+Access Swagger documentation:
 ```
 http://localhost:8000/docs
 ```
 
-### Ejemplo Básico con cURL
+### Basic cURL Example
 
 ```bash
 curl -X POST "http://localhost:8000/api/ocr" \
-  -F "file=@mi_documento.jpg" \
+  -F "file=@my_document.jpg" \
   -F "mode=markdown"
 ```
 
-### Ejemplo con Python
+### Python Example
 
 ```python
 import requests
 
 url = "http://localhost:8000/api/ocr"
 
-# Cargar imagen
-files = {"file": open("documento.jpg", "rb")}
+# Load image
+files = {"file": open("document.jpg", "rb")}
 data = {"mode": "markdown"}
 
-# Enviar request
+# Send request
 response = requests.post(url, files=files, data=data)
 result = response.json()
 
-# Usar resultado
+# Use result
 print(result["text"])
-print(f"Procesado en {result['processing_time']}s")
+print(f"Processed in {result['processing_time']}s")
 ```
 
-### Ejemplo con JavaScript/Node.js
+### JavaScript/Node.js Example
 
 ```javascript
 const FormData = require('form-data');
@@ -131,136 +131,136 @@ const fs = require('fs');
 const axios = require('axios');
 
 const form = new FormData();
-form.append('file', fs.createReadStream('documento.jpg'));
+form.append('file', fs.createReadStream('document.jpg'));
 form.append('mode', 'markdown');
 
 axios.post('http://localhost:8000/api/ocr', form, {
   headers: form.getHeaders()
 })
 .then(response => {
-  console.log('Texto:', response.data.text);
-  console.log('Tiempo:', response.data.processing_time);
+  console.log('Text:', response.data.text);
+  console.log('Time:', response.data.processing_time);
 })
 .catch(error => console.error('Error:', error));
 ```
 
-### Prompt Personalizado
+### Custom Prompt
 
 ```bash
 curl -X POST "http://localhost:8000/api/ocr" \
-  -F "file=@factura.jpg" \
+  -F "file=@invoice.jpg" \
   -F "mode=markdown" \
-  -F "custom_prompt=<image>\nExtrae: número de factura, fecha, total y cliente"
+  -F "custom_prompt=<image>\nExtract: invoice number, date, total and customer"
 ```
 
 ---
 
-## 🎨 Modos de OCR
+## 🎨 OCR Modes
 
-### 1. **Free OCR** (Rápido y Simple)
+### 1. **Free OCR** (Fast and Simple)
 
-**Cuándo usar:**
-- Necesitas solo el texto, sin formato
-- Prioridad en velocidad
-- Texto simple sin estructura compleja
+**When to use:**
+- You need only text, without formatting
+- Priority in speed
+- Simple text without complex structure
 
-**Ejemplo:**
+**Example:**
 ```bash
 curl -X POST "http://localhost:8000/api/ocr" \
-  -F "file=@nota.jpg" \
+  -F "file=@note.jpg" \
   -F "mode=free_ocr"
 ```
 
-**Salida típica:**
+**Typical output:**
 ```
-Esto es un texto simple
-extraído de la imagen
-sin formato especial
+This is a simple text
+extracted from the image
+without special formatting
 ```
 
 ---
 
-### 2. **Markdown** (Documentos Estructurados)
+### 2. **Markdown** (Structured Documents)
 
-**Cuándo usar:**
-- Documentos con títulos, párrafos, listas
-- Necesitas mantener la estructura
-- Quieres formato Markdown
+**When to use:**
+- Documents with titles, paragraphs, lists
+- You need to maintain structure
+- You want Markdown format
 
-**Ejemplo:**
+**Example:**
 ```bash
 curl -X POST "http://localhost:8000/api/ocr" \
-  -F "file=@articulo.jpg" \
+  -F "file=@article.jpg" \
   -F "mode=markdown"
 ```
 
-**Salida típica:**
+**Typical output:**
 ```markdown
-# Título Principal
+# Main Title
 
-## Subtítulo
+## Subtitle
 
-- Elemento de lista 1
-- Elemento de lista 2
+- List item 1
+- List item 2
 
-Párrafo de texto con **negritas** y *cursivas*.
+Paragraph with **bold** and *italic* text.
 ```
 
 ---
 
-### 3. **Grounding** (Con Coordenadas)
+### 3. **Grounding** (With Coordinates)
 
-**Cuándo usar:**
-- Necesitas saber DÓNDE está cada texto
-- Análisis de layout
-- Detección de regiones
+**When to use:**
+- You need to know WHERE each text is
+- Layout analysis
+- Region detection
 
-**Ejemplo:**
+**Example:**
 ```bash
 curl -X POST "http://localhost:8000/api/ocr" \
-  -F "file=@formulario.jpg" \
+  -F "file=@form.jpg" \
   -F "mode=grounding"
 ```
 
-**Salida típica:**
+**Typical output:**
 ```
-<|ref|>Nombre:<|/ref|><|det|>[[120, 50, 200, 80]]<|/det|>
-<|ref|>Juan Pérez<|/ref|><|det|>[[220, 50, 350, 80]]<|/det|>
+<|ref|>Name:<|/ref|><|det|>[[120, 50, 200, 80]]<|/det|>
+<|ref|>John Pérez<|/ref|><|det|>[[220, 50, 350, 80]]<|/det|>
 ```
 
 ---
 
-### 4. **Parse Figure** (Gráficos y Tablas)
+### 4. **Parse Figure** (Charts and Tables)
 
-**Cuándo usar:**
-- Imágenes con gráficos de barras, líneas, pie
-- Tablas complejas
-- Diagramas técnicos
+**When to use:**
+- Images with bar charts, line charts, pie charts
+- Complex tables
+- Technical diagrams
 
-**Ejemplo:**
+**Example:**
 ```bash
 curl -X POST "http://localhost:8000/api/ocr" \
-  -F "file=@grafico.jpg" \
+  -F "file=@chart.jpg" \
   -F "mode=parse_figure"
 ```
 
 ---
 
-### 5. **Detailed** (Descripción Visual)
+### 5. **Detailed** (Visual Description)
 
-**Cuándo usar:**
-- Quieres una descripción de la imagen
-- No solo texto, sino contexto visual
-- Análisis de contenido
+**When to use:**
+- You want an image description
+- Not just text, but visual context
+- Content analysis
 
-**Ejemplo:**
+**Example:**
 ```bash
 curl -X POST "http://localhost:8000/api/ocr" \
-  -F "file=@foto.jpg" \
+  -F "file=@photo.jpg" \
   -F "mode=detailed"
 ```
 
-**Salida típica:**
+**Typical output:**
 ```
 The image shows a business presentation slide with a 
 blue header containing the title "Q4 Results". Below 
@@ -269,45 +269,45 @@ are three bullet points describing financial metrics...
 
 ---
 
-## 💡 Ejemplos Prácticos
+## 💡 Practical Examples
 
-### Caso 1: Digitalizar Facturas
+### Case 1: Digitizing Invoices
 
 ```python
 import requests
 
-def procesar_factura(archivo_factura):
+def process_invoice(invoice_file):
     url = "http://localhost:8000/api/ocr"
     
-    files = {"file": open(archivo_factura, "rb")}
+    files = {"file": open(invoice_file, "rb")}
     data = {
         "mode": "markdown",
-        "custom_prompt": "<image>\nExtrae: número, fecha, total, cliente"
+        "custom_prompt": "<image>\nExtract: number, date, total, customer"
     }
     
     response = requests.post(url, files=files, data=data)
     return response.json()
 
-# Usar
-resultado = procesar_factura("factura_001.jpg")
-print(resultado["text"])
+# Use
+result = process_invoice("invoice_001.jpg")
+print(result["text"])
 ```
 
-### Caso 2: Batch Processing (Múltiples Imágenes)
+### Case 2: Batch Processing (Multiple Images)
 
 ```python
 import os
 import requests
 from pathlib import Path
 
-def procesar_lote(carpeta_imagenes, modo="markdown"):
-    resultados = []
+def process_batch(image_folder, mode="markdown"):
+    results = []
     
-    for archivo in Path(carpeta_imagenes).glob("*.jpg"):
-        print(f"Procesando {archivo.name}...")
+    for file in Path(image_folder).glob("*.jpg"):
+        print(f"Processing {file.name}...")
         
-        files = {"file": open(archivo, "rb")}
-        data = {"mode": modo}
+        files = {"file": open(file, "rb")}
+        data = {"mode": mode}
         
         response = requests.post(
             "http://localhost:8000/api/ocr",
@@ -317,72 +317,72 @@ def procesar_lote(carpeta_imagenes, modo="markdown"):
         
         if response.ok:
             result = response.json()
-            resultados.append({
-                "archivo": archivo.name,
-                "texto": result["text"],
-                "tiempo": result["processing_time"]
+            results.append({
+                "file": file.name,
+                "text": result["text"],
+                "time": result["processing_time"]
             })
     
-    return resultados
+    return results
 
-# Procesar carpeta completa
-resultados = procesar_lote("./documentos")
+# Process complete folder
+results = process_batch("./documents")
 
-# Guardar resultados
-for r in resultados:
-    with open(f"output/{r['archivo']}.txt", "w") as f:
-        f.write(r["texto"])
+# Save results
+for r in results:
+    with open(f"output/{r['file']}.txt", "w") as f:
+        f.write(r["text"])
 ```
 
-### Caso 3: Extraer Tablas de PDFs
+### Case 3: Extract Tables from PDFs
 
 ```bash
-# Convertir PDF a imágenes primero (usando ImageMagick)
-convert -density 300 documento.pdf pagina_%d.jpg
+# Convert PDF to images first (using ImageMagick)
+convert -density 300 document.pdf page_%d.jpg
 
-# Procesar cada página
-for img in pagina_*.jpg; do
+# Process each page
+for img in page_*.jpg; do
   curl -X POST "http://localhost:8000/api/ocr" \
     -F "file=@$img" \
     -F "mode=parse_figure" \
-    -o "resultado_$img.json"
+    -o "result_$img.json"
 done
 ```
 
 ---
 
-## 🎯 Tips y Mejores Prácticas
+## 🎯 Tips and Best Practices
 
-### Para Mejor Calidad
+### For Better Quality
 
-1. **Resolución óptima**: 1024×1024 píxeles
-2. **Formato**: JPG o PNG (evitar compresión excesiva)
-3. **Iluminación**: Imágenes bien iluminadas, sin sombras
-4. **Orientación**: Asegúrate que el texto esté derecho
+1. **Optimal resolution**: 1024×1024 pixels
+2. **Format**: JPG or PNG (avoid excessive compression)
+3. **Lighting**: Well-lit images, without shadows
+4. **Orientation**: Make sure text is upright
 
-### Para Mejor Velocidad
+### For Better Speed
 
-1. **Usa GPU**: Mucho más rápido que CPU
-2. **Modo adecuado**: `free_ocr` es el más rápido
-3. **Resolución menor**: Reduce si no necesitas máxima calidad
-4. **Batch async**: Procesa múltiples imágenes en paralelo
+1. **Use GPU**: Much faster than CPU
+2. **Appropriate mode**: `free_ocr` is the fastest
+3. **Lower resolution**: Reduce if you don't need maximum quality
+4. **Async batch**: Process multiple images in parallel
 
-### Configuración de Rendimiento
+### Performance Configuration
 
-Edita `docker-compose.yml`:
+Edit `docker-compose.yml`:
 
 ```yaml
 environment:
-  - BASE_SIZE=640    # Menor = más rápido (default: 1024)
-  - IMAGE_SIZE=512   # Menor = más rápido (default: 640)
+  - BASE_SIZE=640    # Lower = faster (default: 1024)
+  - IMAGE_SIZE=512   # Lower = faster (default: 640)
 ```
 
-### Ajustes de Memoria
+### Memory Adjustments
 
-Si tienes problemas de memoria GPU:
+If you have GPU memory problems:
 
 ```yaml
-# En docker-compose.yml, limitar memoria
+# In docker-compose.yml, limit memory
 deploy:
   resources:
     limits:
@@ -397,25 +397,25 @@ deploy:
 
 ## 🔧 Troubleshooting
 
-### Problema: "Model not loaded"
+### Problem: "Model not loaded"
 
-**Solución:**
+**Solution:**
 ```bash
-# Ver logs del contenedor
+# View container logs
 docker-compose logs deepseek-ocr-api
 
-# Reiniciar servicios
+# Restart services
 docker-compose restart
 ```
 
-### Problema: GPU no detectada
+### Problem: GPU not detected
 
-**Verificar NVIDIA Docker:**
+**Verify NVIDIA Docker:**
 ```bash
 docker run --rm --gpus all nvidia/cuda:11.8.0-base-ubuntu22.04 nvidia-smi
 ```
 
-**Si falla, instalar NVIDIA Container Toolkit:**
+**If it fails, install NVIDIA Container Toolkit:**
 ```bash
 # Ubuntu/Debian
 distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
@@ -427,19 +427,19 @@ sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
 sudo systemctl restart docker
 ```
 
-### Problema: Out of Memory (OOM)
+### Problem: Out of Memory (OOM)
 
-**Soluciones:**
+**Solutions:**
 
-1. Reduce resolución:
+1. Reduce resolution:
 ```python
-# En backend/config.py
-BASE_SIZE = 640  # en lugar de 1024
+# In backend/config.py
+BASE_SIZE = 640  # instead of 1024
 ```
 
-2. Usa CPU si GPU falla:
+2. Use CPU if GPU fails:
 ```yaml
-# En docker-compose.yml, comentar la sección GPU:
+# In docker-compose.yml, comment GPU section:
 # deploy:
 #   resources:
 #     reservations:
@@ -447,77 +447,77 @@ BASE_SIZE = 640  # en lugar de 1024
 #         - driver: nvidia
 ```
 
-3. Procesa imágenes más pequeñas
+3. Process smaller images
 
-### Problema: Procesamiento muy lento
+### Problem: Very Slow Processing
 
-**Diagnóstico:**
+**Diagnosis:**
 ```bash
-# Verificar uso de GPU
+# Check GPU usage
 nvidia-smi
 
-# Ver logs en tiempo real
+# View real-time logs
 docker-compose logs -f deepseek-ocr-api
 ```
 
-**Si usa CPU en vez de GPU:**
-- Verifica NVIDIA Docker Toolkit
-- Revisa `CUDA_VISIBLE_DEVICES` en `.env`
+**If using CPU instead of GPU:**
+- Verify NVIDIA Docker Toolkit
+- Check `CUDA_VISIBLE_DEVICES` in `.env`
 
-### Problema: Errores de conexión
+### Problem: Connection Errors
 
-**Verificar servicios:**
+**Check services:**
 ```bash
 docker-compose ps
 curl http://localhost:8000/health
 ```
 
-**Reiniciar:**
+**Restart:**
 ```bash
 docker-compose down
 docker-compose up -d
 ```
 
-### Problema: Resultados vacíos
+### Problem: Empty Results
 
-**Posibles causas:**
-- Imagen de baja calidad
-- Texto muy pequeño
-- Modo incorrecto
+**Possible causes:**
+- Low quality image
+- Very small text
+- Incorrect mode
 
-**Soluciones:**
-- Aumenta resolución de imagen
-- Usa modo `grounding` en vez de `free_ocr`
-- Prueba con `detailed` para ver qué detecta
+**Solutions:**
+- Increase image resolution
+- Use `grounding` mode instead of `free_ocr`
+- Try with `detailed` to see what it detects
 
 ---
 
-## 📊 Monitoreo
+## 📊 Monitoring
 
-### Logs en tiempo real
+### Real-time Logs
 
 ```bash
-# Todos los servicios
+# All services
 docker-compose logs -f
 
-# Solo API
+# Only API
 docker-compose logs -f deepseek-ocr-api
 
-# Solo web
+# Only web
 docker-compose logs -f deepseek-ocr-web
 ```
 
-### Uso de recursos
+### Resource Usage
 
 ```bash
 # Docker stats
 docker stats
 
-# GPU usage (si NVIDIA)
+# GPU usage (if NVIDIA)
 watch -n 1 nvidia-smi
 ```
 
-### Limpiar archivos antiguos
+### Clean Old Files
 
 ```bash
 # Via API
@@ -529,35 +529,35 @@ rm -rf uploads/* outputs/*
 
 ---
 
-## 🔐 Seguridad
+## 🔐 Security
 
-### Producción
+### Production
 
-Si expones el API públicamente:
+If you expose the API publicly:
 
-1. **Añade autenticación**
-2. **Limita rate limiting**
-3. **Valida archivos estrictamente**
-4. **Usa HTTPS**
-5. **Configura firewall**
+1. **Add authentication**
+2. **Limit rate limiting**
+3. **Validate files strictly**
+4. **Use HTTPS**
+5. **Configure firewall**
 
-### Límites recomendados
+### Recommended Limits
 
 ```python
-# En backend/config.py
+# In backend/config.py
 MAX_FILE_SIZE = 5 * 1024 * 1024  # 5MB
-RATE_LIMIT = "10/minute"  # Requiere middleware
+RATE_LIMIT = "10/minute"  # Requires middleware
 ```
 
 ---
 
-## 📚 Recursos Adicionales
+## 📚 Additional Resources
 
-- [Repositorio DeepSeek-OCR](https://github.com/deepseek-ai/DeepSeek-OCR)
-- [Modelo en HuggingFace](https://huggingface.co/deepseek-ai/DeepSeek-OCR)
+- [DeepSeek-OCR Repository](https://github.com/deepseek-ai/DeepSeek-OCR)
+- [Model on HuggingFace](https://huggingface.co/deepseek-ai/DeepSeek-OCR)
 - [FastAPI Docs](https://fastapi.tiangolo.com/)
 - [Docker Compose Docs](https://docs.docker.com/compose/)
 
 ---
 
-**¿Preguntas o problemas?** Abre un issue en el repositorio.
+**Questions or problems?** Open an issue in the repository.
