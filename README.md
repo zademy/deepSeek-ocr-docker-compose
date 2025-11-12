@@ -55,7 +55,7 @@
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/YOUR_USERNAME/deepseek-ocr.git
+git clone https://github.com/zademy/deepSeek-ocr-docker-compose
 cd deepseek-ocr
 ```
 
