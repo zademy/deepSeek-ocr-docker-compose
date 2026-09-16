@@ -144,6 +144,7 @@
     state.nextOpId += 1;
     state.op = null;
     state.file = null;
+    state.result = null;
     if (state.previewUrl) {
       URL.revokeObjectURL(state.previewUrl);
       state.previewUrl = null;
@@ -153,7 +154,14 @@
     renderDocument();
     hide(els.opProgress);
     hide(els.opError);
+    hide(els.resultSection);
     updateExtract();
+  }
+
+  function escapeHtml(value) {
+    const div = document.createElement("div");
+    div.textContent = String(value ?? "");
+    return div.innerHTML;
   }
 
   function modelPanelHtml() {
@@ -163,16 +171,16 @@
       return `
         <div class="space-y-2">
           <div class="h-3 w-full rounded-full bg-slate-200 overflow-hidden">
-            <div id="downloadBar" class="h-full bg-indigo-600 transition-all" style="width:${m.percent}%"></div>
+            <div id="downloadBar" class="h-full bg-indigo-600 transition-all" style="width:${Number(m.percent) || 0}%"></div>
           </div>
-          <p id="downloadText">${m.percent}% — ${m.message || "Preparando el modelo…"}</p>
+          <p id="downloadText">${escapeHtml(m.percent)}% — ${escapeHtml(m.message || "Preparando el modelo…")}</p>
           <p class="text-slate-500">La primera preparación puede tardar varios minutos. Puedes probar el modo demo mientras tanto.</p>
         </div>`;
     }
     if (m.phase === "error") {
       return `
         <p>El modelo no pudo prepararse en el servidor.</p>
-        <p class="text-slate-600">${m.message || ""}</p>
+        <p class="text-slate-600">${escapeHtml(m.message || "")}</p>
         <p class="text-slate-500">Reinicia el servicio o revisa los registros del servidor para continuar.</p>`;
     }
     if (m.phase === "absent") {

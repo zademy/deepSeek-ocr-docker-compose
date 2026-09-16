@@ -14,13 +14,13 @@
 ## ✨ Features
 
 - 🤖 **Latest AI Model** - DeepSeek-OCR-2 optimized for text recognition
-- 🌐 **Modern Web Interface** - Intuitive UI with drag-and-drop upload
+- 🌐 **Interfaz clara** - Flujo de tres pasos pensado para personas no técnicas
 - 📊 **Progress Tracking** - Real-time model download progress bar
 - 🎮 **Demo Mode** - Test the interface without downloading the model
 - 🔌 **Complete REST API** - Easy integration with FastAPI
 - 🐳 **Docker Compose** - Deploy in minutes with one command
 - ⚡ **GPU Accelerated** - NVIDIA CUDA support for maximum speed
-- 📝 **Multiple Modes** - Free OCR, Markdown, Grounding, Parse Figure, Detailed
+- ♿ **Accesible** - Keyboard navigation, WCAG AA contrast, responsive from 320px
 - 🔓 **100% Open Source** - MIT License for development/testing
 
 ## 📚 Table of Contents
@@ -84,9 +84,13 @@ docker compose -f docker-compose.yml -f docker-compose.gpu.yml up -d
 
 ### 5. Download Model (First Time)
 
-When you first access the web interface, you'll see a button to download the DeepSeek-OCR-2 model. Click it and wait for the download to complete (this may take several minutes depending on your internet connection).
+When you first access the web interface, you'll see a "Preparar modelo" panel. Click it and wait for the download to complete (this may take several minutes depending on your internet connection).
 
-Alternatively, use **Demo Mode** to test the interface without downloading the model.
+Alternatively, use **Demo Mode** ("Probar sin modelo") to test the interface without downloading the model. Results in demo mode are clearly marked as simulated.
+
+### Web interface formats
+
+The web interface accepts **JPG, PNG and WEBP** up to 10 MB. PDF is not supported by the interface pipeline.
 
 ### API Usage Example
 
@@ -179,12 +183,15 @@ curl -X POST "http://localhost:8000/api/ocr" \
 
 ### Available Modes
 
-| Mode | Description | Recommended Use |
-|------|-------------|-----------------|
-| `free_ocr` | Fast OCR without structure | General text |
-| `markdown` | Converts to Markdown | Documents |
-| `grounding` | OCR + coordinates | Detailed analysis |
-| `detailed` | Image description | Visual analysis |
+| Mode | Interface label (Spanish) | Recommended Use |
+|------|---------------------------|-----------------|
+| `markdown` | Documento con formato | Documents (default) |
+| `free_ocr` | Texto sin formato | General text |
+| `grounding` | Texto con posiciones | Detailed analysis |
+| `parse_figure` | Figuras y gráficos | Charts, tables |
+| `detailed` | Descripción de la imagen | Visual analysis |
+
+The web interface shows these as "Opciones avanzadas" (collapsed by default); the API accepts the raw values.
 
 ### Response Example
 

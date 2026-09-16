@@ -7,7 +7,7 @@ RUN npm ci
 
 COPY src/input.css ./
 COPY index.html app.js ./
-RUN npx @tailwindcss/cli -i ./input.css -o /out/app.css --content ./index.html,./app.js
+RUN npx @tailwindcss/cli -i ./input.css -o /out/app.css
 
 FROM nginx:alpine
 
