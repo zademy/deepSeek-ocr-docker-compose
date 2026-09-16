@@ -8,7 +8,12 @@ import pytest
 from fastapi import HTTPException
 from PIL import Image
 
-from model_lifecycle import InferSettings, ModelLifecycle, ModelLoadError
+from model_lifecycle import (
+    CannedModel,
+    InferSettings,
+    ModelLifecycle,
+    ModelLoadError,
+)
 from ocr_handler import OcrHandler
 from tests.fakes import FakeOcr
 
@@ -112,3 +117,23 @@ async def test_lifecycle_load_error_surfaces_as_model_load_error():
     status = lc.status()
     assert status.error == "boom"
     assert status.progress.status == "error"
+
+
+@pytest.mark.asyncio
+async def test_canned_model_loads_and_infers():
+    canned = CannedModel(result_text="TEXTO ENLATADO")
+    lc = ModelLifecycle(model=canned, settings=InferSettings())
+    await lc.ensure_loaded()
+
+    assert lc.status().loaded
+    assert lc.status().progress.percent == 100
+
+    out = canned.infer("/tmp/x.png", "<image>\nFree OCR. ", "/tmp/out", InferSettings())
+    assert out == "TEXTO ENLATADO"
+
+
+@pytest.mark.asyncio
+async def test_canned_model_can_return_empty_result():
+    canned = CannedModel(result_text="")
+    out = canned.infer("/tmp/x.png", "<image>\nFree OCR. ", "/tmp/out", InferSettings())
+    assert out == ""

@@ -12,8 +12,11 @@ from fastapi import Depends, FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
+import os
+
 from config import settings
 from model_lifecycle import (
+    CannedModel,
     DeepSeekModel,
     InferSettings,
     ModelLifecycle,
@@ -32,7 +35,12 @@ infer_settings = InferSettings(
     save_results=True,
 )
 
-model = DeepSeekModel(model_name=settings.MODEL_NAME, device=settings.DEVICE)
+if os.getenv("OCR_FAKE_MODE") == "1":
+    _fake_raw = os.getenv("OCR_FAKE_RESULT", "")
+    _fake_text = "" if _fake_raw == "empty" else (_fake_raw or None)
+    model = CannedModel(result_text=_fake_text)
+else:
+    model = DeepSeekModel(model_name=settings.MODEL_NAME, device=settings.DEVICE)
 lifecycle = ModelLifecycle(model=model, settings=infer_settings)
 ocr_handler = OcrHandler(
     model=model,

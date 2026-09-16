@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import time
 from pathlib import Path
 from typing import Callable, Literal, Optional, Protocol
 
@@ -176,3 +177,33 @@ class DeepSeekModel:
 
     def device(self) -> str:
         return self._device
+
+
+class CannedModel:
+    def __init__(self, result_text: Optional[str] = None):
+        default_text = (
+            "# Documento de ejemplo\n\n"
+            "Este texto proviene del adaptador de verificacion local.\n\n"
+            "- Primer elemento\n- Segundo elemento\n"
+        )
+        self._result_text = default_text if result_text is None else result_text
+
+    def load(self, progress_callback: Callable[[int, str], None]) -> None:
+        for percent, message in [
+            (10, "Preparando"),
+            (40, "Cargando"),
+            (80, "Configurando"),
+        ]:
+            progress_callback(percent, message)
+            time.sleep(2.5)
+        progress_callback(100, "Listo")
+
+    def infer(
+        self,
+        image_path: str,
+        prompt: str,
+        output_path: str,
+        settings: InferSettings,
+    ) -> str:
+        time.sleep(1.5)
+        return self._result_text
