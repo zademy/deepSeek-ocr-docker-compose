@@ -1,0 +1,13 @@
+{
+  "name": "deepseek-ocr-frontend",
+  "private": true,
+  "version": "2.0.0",
+  "description": "Static frontend for DeepSeek OCR. Tailwind CSS compiled at Docker build time.",
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/input.css -o ./dist/app.css"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "4.3.3",
+    "tailwindcss": "4.3.3"
+  }
+}

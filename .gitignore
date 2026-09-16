@@ -208,3 +208,7 @@ scratch/
 /.playwright-mcp/
 /.reticle/
 /.ignore
+
+# Frontend: lockfile y dockerignore sí se versionan (build reproducible)
+!frontend/package-lock.json
+!frontend/.dockerignore
