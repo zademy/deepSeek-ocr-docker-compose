@@ -1,5 +1,6 @@
 services:
   deepseek-ocr-api:
+    platform: linux/amd64
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -14,16 +15,11 @@ services:
       - ./outputs:/app/outputs
       - model_cache:/root/.cache/huggingface
     environment:
-      - CUDA_VISIBLE_DEVICES=0
+      - CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0}
       - HF_HOME=/root/.cache/huggingface
-      - MODEL_NAME=deepseek-ai/DeepSeek-OCR
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
+      - MODEL_NAME=${MODEL_NAME:-deepseek-ai/DeepSeek-OCR-2}
+      - BASE_SIZE=${BASE_SIZE:-1024}
+      - IMAGE_SIZE=${IMAGE_SIZE:-768}
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]

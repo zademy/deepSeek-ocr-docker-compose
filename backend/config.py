@@ -5,26 +5,26 @@ from typing import Literal
 
 class Settings(BaseSettings):
     """Configuración de la aplicación"""
-    
+
     # Modelo
-    MODEL_NAME: str = os.getenv("MODEL_NAME", "deepseek-ai/DeepSeek-OCR")
-    
+    MODEL_NAME: str = os.getenv("MODEL_NAME", "deepseek-ai/DeepSeek-OCR-2")
+
     # Rutas
     UPLOAD_DIR: str = "/app/uploads"
     OUTPUT_DIR: str = "/app/outputs"
-    
+
     # Configuración de imagen
     BASE_SIZE: int = int(os.getenv("BASE_SIZE", "1024"))
     IMAGE_SIZE: int = int(os.getenv("IMAGE_SIZE", "640"))
     CROP_MODE: bool = True
-    
+
     # Límites
     MAX_FILE_SIZE: int = 10 * 1024 * 1024  # 10MB
     ALLOWED_EXTENSIONS: set = {".jpg", ".jpeg", ".png", ".pdf", ".webp"}
-    
+
     # Device
     DEVICE: str = "cuda" if os.getenv("CUDA_VISIBLE_DEVICES") else "cpu"
-    
+
     class Config:
         env_file = ".env"
 

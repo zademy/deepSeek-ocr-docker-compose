@@ -199,3 +199,12 @@ TODO.md
 DRAFT*.md
 personal/
 scratch/
+
+# graft's local graph cache — regenerable, not committed (run `graft build`).
+/graft/
+
+# local agent/tool caches
+/.codegraph/
+/.playwright-mcp/
+/.reticle/
+/.ignore

@@ -1,0 +1,9 @@
+services:
+  deepseek-ocr-api:
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]

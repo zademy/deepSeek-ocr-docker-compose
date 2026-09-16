@@ -14,9 +14,9 @@ transformers==4.46.3            # Hugging Face transformers library for model lo
 tokenizers==0.20.3             # Tokenization library for text processing
 huggingface-hub>=0.30.0          # Hugging Face model hub integration
 accelerate>=0.25.0              # PyTorch acceleration library
-torch>=2.0.0                   # PyTorch deep learning framework
-torchvision>=0.15.0             # Computer vision library for PyTorch
-sentencepiece==0.1.99            # Tokenizer library used by transformers
+torch>=2.6.0                   # PyTorch deep learning framework (DeepSeek-OCR-2 requires 2.6.0+)
+torchvision>=0.21.0             # Computer vision library for PyTorch
+sentencepiece>=0.2.0            # Tokenizer library used by transformers (cp312 wheel)
 protobuf>=3.20.0                # Protocol buffers for data serialization
 
 # Image processing (DeepSeek-OCR requirements)
